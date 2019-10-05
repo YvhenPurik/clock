@@ -1,11 +1,19 @@
 import React from 'react';
 import './App.css';
-import moment from 'moment'
+import moment from 'moment-timezone'
+import Fab from '@material-ui/core/Fab';
+import IconButton from '@material-ui/core/IconButton';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+
+
 class Clock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: moment().format('HH:MM:ss')
+      date: moment().zone(this.props.utc).format('HH:MM:ss'),
+      // date2: date = new Date(timestamp),
+      //dateTimezone: moment().tz(this.props.city).format('z')
     }
   }
 
@@ -22,17 +30,29 @@ class Clock extends React.Component {
 
   tick() {
     this.setState({
-      date: moment().format('HH:MM:ss')
+      date: moment().zone(this.props.utc).format('HH:MM:ss'),
+      //dateTimezone: moment().tz(this.props.city)
+
     })
   }
 
   render() {
-    console.log(this.state.date)
+
     return (
+
       <div className="container">
+
         <p className='city'>{this.props.city}</p>
+        {this.props.city == 'Kiev' ?
+          <Fab size="small" color="secondary" aria-label="keyboard_arrow_up" >
+            <KeyboardArrowUpIcon />
+          </Fab> : null}
         <h1 >{this.state.date}</h1>
-      </div >
+        {this.props.city == 'Kiev' ?
+          <Fab size="small" color="secondary" aria-label="keyboard_arrow_up" >
+            <KeyboardArrowDownIcon />
+          </Fab> : null}
+      </div>
 
     )
   }
